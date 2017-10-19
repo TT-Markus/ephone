@@ -21,6 +21,7 @@
 -export([normalize_did/2, parse_did/2]).
 -export([normalize_destination/2, parse_destination/2]).
 -export([format/3]).
+-export([split_country_code/1]).
 -export([clean_phone_number/1]).
 -export([is_phone_number/1, is_country_code/1, is_iso_code/1]).
 %% -export([parse/2, is_valid/1, normalize/1, format/2]).
@@ -122,6 +123,10 @@ parse_destination(PhoneNumber, Options) ->
 -spec format(Format :: binary() | string(), phone_number() | [phone_field()], [parse_option()]) -> iolist().
 format(Format, PhoneNumber, Options) when is_binary(Format) ->
     gen_server:call(?SERVER, {format, Format, PhoneNumber, Options}).
+
+-spec split_country_code(phone_number()) -> {iolist(), iolist()}.
+split_country_code(PhoneNumber) ->
+    gen_server:call(?SERVER, {split_country_code, PhoneNumber}).
 
 -spec clean_phone_number(binary()) -> phone_number().
 clean_phone_number(PhoneNumber) ->
